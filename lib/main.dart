@@ -1,9 +1,10 @@
 import 'package:ecommerce_demo/screens/products_screen/products_screen.dart';
 import 'package:ecommerce_demo/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

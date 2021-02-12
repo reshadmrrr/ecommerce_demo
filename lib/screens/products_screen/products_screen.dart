@@ -1,22 +1,14 @@
-import 'dart:convert';
-
 import 'package:ecommerce_demo/models/product_model.dart';
 import 'package:ecommerce_demo/screens/products_screen/local_widgets/product_card.dart';
-import 'package:ecommerce_demo/utils/api.dart';
+import 'package:ecommerce_demo/states/cart_state.dart';
+import 'package:ecommerce_demo/states/product_state.dart';
 import 'package:ecommerce_demo/utils/global_widgets/appbar.dart';
 import 'package:ecommerce_demo/utils/size.dart';
 import 'package:flutter/material.dart';
-import "package:http/http.dart" as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyProductsScreen extends StatefulWidget {
-  @override
-  _MyProductsScreenState createState() => _MyProductsScreenState();
-}
-
-class _MyProductsScreenState extends State<MyProductsScreen> {
-  Future<List<MyProductModel>> _products;
-  @override
-  Widget build(BuildContext context) {
+class MyProductsScreen extends ConsumerWidget {
+  Widget build(BuildContext context, ScopedReader watch) {
     double _crossAxisSpacing = 16;
     double _mainAxisSpacing = 16;
     double _cellHeight = 250.0;
@@ -27,58 +19,38 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
     double _aspectRatio =
         _width / (_cellHeight + _mainAxisSpacing + (_crossAxisCount + 1));
 
+    AsyncValue<List<MyProductModel>> _products =
+        watch(productStateFutureProvider);
+    final _cardList = watch(cartListStateProvider.state);
+
     return Scaffold(
-      appBar: buildAppBar("PRODUCTS", context),
+      appBar: buildAppBar(
+          title: "PRODUCTS", context: context, counter: _cardList.length),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder(
-            future: _products,
-            builder: (context, snapshots) {
-              return snapshots.hasData
-                  ? GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: _aspectRatio,
-                        crossAxisCount: _crossAxisCount,
-                        crossAxisSpacing: _crossAxisSpacing,
-                        mainAxisSpacing: _mainAxisSpacing,
-                      ),
-                      itemCount: snapshots.data.length,
-                      itemBuilder: (context, index) {
-                        var tmp = snapshots.data[index];
-                        return MyProductCard(
-                          name: tmp.name,
-                          price: tmp.price,
-                          photo: tmp.photo,
-                        );
-                      })
-                  : Center(child: CircularProgressIndicator());
+        child: _products.when(
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text(error.toString())),
+            data: (value) {
+              return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: _aspectRatio,
+                    crossAxisCount: _crossAxisCount,
+                    crossAxisSpacing: _crossAxisSpacing,
+                    mainAxisSpacing: _mainAxisSpacing,
+                  ),
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return MyProductCard(
+                      name: value[index].name,
+                      price: value[index].price,
+                      photo: value[index].photo,
+                      onTap: () =>
+                          context.read(cartListStateProvider).add(value[index]),
+                    );
+                  });
             }),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _products = _getProducts();
-  }
-
-  Future<List<MyProductModel>> _getProducts() async {
-    List<MyProductModel> output = [];
-    try {
-      final response = await http.get(Api.def);
-      if (response.statusCode == 200) {
-        final body = jsonDecode(response.body);
-        // print(body);
-        for (var data in body['data']) {
-          print(data);
-          output.add(MyProductModel.fromMap(data));
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-    print(output.length);
-    return output;
   }
 }

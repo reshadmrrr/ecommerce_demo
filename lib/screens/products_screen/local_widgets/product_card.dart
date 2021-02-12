@@ -9,41 +9,46 @@ class MyProductCard extends StatelessWidget {
   final String name;
   final int price;
   final String photo;
+  final Function onTap;
   const MyProductCard({
     Key key,
     this.name,
     this.price,
     this.photo,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: MyColor.textWhite,
-      elevation: 0.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Flexible(
-              child: Container(
-                height: double.maxFinite,
-                child: Image.network(photo, fit: BoxFit.cover),
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+        color: MyColor.textWhite,
+        elevation: 0.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Container(
+                  height: double.maxFinite,
+                  child: Image.network(photo, fit: BoxFit.cover),
+                ),
               ),
-            ),
-            Text(
-              name,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            Text("\$$price",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .copyWith(color: MyColor.primary)),
-            MyRating(rating: Random().nextInt(5)),
-          ],
+              Text(
+                name,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Text("\$$price",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(color: MyColor.primary)),
+              MyRating(rating: Random().nextInt(5)),
+            ],
+          ),
         ),
       ),
     );
