@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce_demo/models/product_model.dart';
 import 'package:ecommerce_demo/screens/products_screen/local_widgets/product_card.dart';
 import 'package:ecommerce_demo/utils/api.dart';
+import 'package:ecommerce_demo/utils/global_widgets/appbar.dart';
 import 'package:ecommerce_demo/utils/size.dart';
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
@@ -27,18 +28,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
         _width / (_cellHeight + _mainAxisSpacing + (_crossAxisCount + 1));
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: Icon(Icons.menu),
-        title: Text("PRODUCTS"),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.filter_list_outlined),
-          )
-        ],
-      ),
+      appBar: buildAppBar("PRODUCTS", context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder(
