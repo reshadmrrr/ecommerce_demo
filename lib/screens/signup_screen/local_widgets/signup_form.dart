@@ -1,3 +1,4 @@
+import 'package:ecommerce_demo/utils/global_widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class MySignupForm extends StatefulWidget {
@@ -20,6 +21,7 @@ class _MySignupFormState extends State<MySignupForm> {
             labelText: "Username",
           ),
         ),
+        SizedBox(height: 16.0),
         TextField(
           onChanged: (val) => _password = val.trim(),
           decoration: InputDecoration(
@@ -27,6 +29,7 @@ class _MySignupFormState extends State<MySignupForm> {
             labelText: "Password",
           ),
         ),
+        SizedBox(height: 16.0),
         TextField(
           onChanged: (val) => _email = val.trim(),
           decoration: InputDecoration(
@@ -34,9 +37,12 @@ class _MySignupFormState extends State<MySignupForm> {
             labelText: "Confirm Password",
           ),
         ),
-        RaisedButton(
-          onPressed: _signUp,
-          child: Text("SIGN UP"),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 40.0),
+          child: MyButton(
+            onPressed: _signUp,
+            title: "SIGN UP",
+          ),
         ),
       ],
     );

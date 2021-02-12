@@ -7,19 +7,25 @@ class MySignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColor.secondary,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(50),
-          child: Column(
-            children: [
-              Text(
-                "Sign Up",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              MySignupForm(),
-              Text("Have An Account? Sign In"),
-            ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(50),
+            child: Column(
+              children: [
+                Text(
+                  "Sign Up",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                SizedBox(height: 50.0),
+                MySignupForm(),
+                InkWell(
+                  onTap: () {},
+                  child: Text("Have An Account? Sign In"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
