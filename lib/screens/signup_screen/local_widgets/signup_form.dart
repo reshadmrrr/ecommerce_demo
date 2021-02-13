@@ -31,7 +31,7 @@ class _MySignupFormState extends State<MySignupForm> {
         ),
         SizedBox(height: 16.0),
         TextField(
-          onChanged: (val) => _email = val.trim(),
+          onChanged: (val) => _password = _password == val ? val.trim() : null,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.lock_outline_rounded, color: Colors.white),
             labelText: "Confirm Password",
@@ -49,6 +49,6 @@ class _MySignupFormState extends State<MySignupForm> {
   }
 
   void _signUp() {
-    print("Email: $_email, Password: $_password");
+    if (_password != null) print("Email: $_email, Password: $_password");
   }
 }

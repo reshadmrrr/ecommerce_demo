@@ -30,17 +30,14 @@ class MyCartScreen extends ConsumerWidget {
                   itemCount: _allItems.length,
                   itemBuilder: (context, index) {
                     var item = _allItems[index];
-                    if (_allItemsCount[index] > 0) {
-                      return MyListTile(
+                    return MyListTile(
                         name: item.name,
                         photo: item.photo,
                         price: item.price,
                         itemCount: _allItemsCount[index],
-                        onPressed: () =>
-                            context.read(cartProvider).deleteProduct(item),
-                      );
-                    } else
-                      return null;
+                        onPressed: () {
+                          context.read(cartProvider).deleteProduct(item);
+                        });
                   }),
             ),
             Divider(thickness: 2),
