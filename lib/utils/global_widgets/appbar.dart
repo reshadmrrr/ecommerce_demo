@@ -1,5 +1,6 @@
 import 'package:ecommerce_demo/screens/cart_screen/cart_screen.dart';
 import 'package:ecommerce_demo/utils/color.dart';
+import 'package:ecommerce_demo/utils/navigator.dart';
 import 'package:flutter/material.dart';
 
 AppBar buildAppBar(
@@ -18,8 +19,7 @@ AppBar buildAppBar(
                 icon: Icon(Icons.shopping_cart_rounded),
                 onPressed: () {
                   if (title == "PRODUCTS")
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MyCartScreen()));
+                    MyNavigator.push(context: context, screen: MyCartScreen());
                 },
               ),
               Positioned(

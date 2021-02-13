@@ -1,4 +1,6 @@
+import 'package:ecommerce_demo/screens/products_screen/products_screen.dart';
 import 'package:ecommerce_demo/utils/global_widgets/button.dart';
+import 'package:ecommerce_demo/utils/navigator.dart';
 import 'package:flutter/material.dart';
 
 class MySignupForm extends StatefulWidget {
@@ -50,5 +52,6 @@ class _MySignupFormState extends State<MySignupForm> {
 
   void _signUp() {
     if (_password != null) print("Email: $_email, Password: $_password");
+    MyNavigator.pushReplacement(context: context, screen: MyProductsScreen());
   }
 }
