@@ -2,7 +2,8 @@ import 'package:ecommerce_demo/screens/cart_screen/cart_screen.dart';
 import 'package:ecommerce_demo/utils/color.dart';
 import 'package:flutter/material.dart';
 
-AppBar buildAppBar({String title, BuildContext context, int counter = 0}) =>
+AppBar buildAppBar(
+        {String title, BuildContext context, String counter = "0"}) =>
     AppBar(
       elevation: 0.0,
       leading: title == "PRODUCTS" ? Icon(Icons.menu) : null,
@@ -35,7 +36,7 @@ AppBar buildAppBar({String title, BuildContext context, int counter = 0}) =>
                     minWidth: 14,
                   ),
                   child: Text(
-                    "$counter",
+                    counter,
                     style: TextStyle(
                       color: MyColor.textSecondary,
                       fontSize: 8,

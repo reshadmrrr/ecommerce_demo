@@ -21,13 +21,16 @@ class MyProductsScreen extends ConsumerWidget {
 
     AsyncValue<List<MyProductModel>> _products =
         watch(productStateFutureProvider);
-    final _cardList = watch(cartListStateProvider.state);
+    final _cart = watch(cartProvider);
 
     return Scaffold(
       appBar: buildAppBar(
-          title: "PRODUCTS", context: context, counter: _cardList.length),
+        title: "PRODUCTS",
+        context: context,
+        counter: "${_cart.cartItemCount}",
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: _products.when(
             loading: () => Center(child: CircularProgressIndicator()),
             error: (error, stack) => Center(child: Text(error.toString())),
@@ -42,12 +45,12 @@ class MyProductsScreen extends ConsumerWidget {
                   itemCount: value.length,
                   itemBuilder: (context, index) {
                     return MyProductCard(
-                      name: value[index].name,
-                      price: value[index].price,
-                      photo: value[index].photo,
-                      onTap: () =>
-                          context.read(cartListStateProvider).add(value[index]),
-                    );
+                        name: value[index].name,
+                        price: value[index].price,
+                        photo: value[index].photo,
+                        onTap: () {
+                          context.read(cartProvider).addProduct(value[index]);
+                        });
                   });
             }),
       ),

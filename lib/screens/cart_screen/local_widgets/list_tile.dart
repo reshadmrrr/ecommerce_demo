@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class MyListTile extends StatelessWidget {
   final String name;
   final int price;
+  final int itemCount;
   final String photo;
   final Function onPressed;
   const MyListTile({
@@ -12,6 +13,7 @@ class MyListTile extends StatelessWidget {
     this.price,
     this.photo,
     this.onPressed,
+    this.itemCount = 0,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,15 @@ class MyListTile extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      title: Text(name),
+      title: Row(
+        children: [
+          Text(name),
+          Text(
+            " x $itemCount",
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
       tileColor: MyColor.textWhite,
       subtitle: Text("\$$price"),
       trailing: IconButton(
