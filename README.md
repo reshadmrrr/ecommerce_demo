@@ -1,6 +1,6 @@
 # ecommerce_demo
 
-just another flutter application. 
+just another flutter application to get to know riverpod state management. 
 
 ## Getting Started
 
